@@ -50,106 +50,32 @@ jobs:
         done
 
 
-    - name: SonarCloud Scan for Edu-Connect Project
+ ##    - name: SonarCloud Scan for Edu-Connect Project
+#       run: |
+#         for dir in Config-service Discovery Student Teacher video-test Gateway-Service Security_Microservice Cour; do
+  #         if [ -f "$dir/pom.xml" ]; then
+    #         echo "Running SonarCloud scan for $dir"
+      #       cd $dir
+        #     mvn sonar:sonar \
+          #     -Dsonar.projectKey=mohamed-alaoui6_edu-connect-ci-cd \
+            ##    -Dsonar.organization=mohamed-alaoui6 \
+    #           -Dsonar.host.url=https://sonarcloud.io \
+      #         -Dsonar.sources=src/main/java \
+        #       -Dsonar.tests=src/test/java \
+        #       -Dsonar.java.binaries=target/classes \
+         #      -Dsonar.test.inclusions=**/*Test*.java \
+          #     -Dsonar.login=${{ secrets.SONARTOKEN }}
+ #            cd ..
+   #        fi
+     #    done
+
+
+
+    - name: Push Docker images
       run: |
-        for dir in Config-service Discovery Student Teacher video-test Gateway-Service Security_Microservice Cour; do
-          if [ -f "$dir/pom.xml" ]; then
-            echo "Running SonarCloud scan for $dir"
-            cd $dir
-            mvn sonar:sonar \
-              -Dsonar.projectKey=mohamed-alaoui6_edu-connect-ci-cd \
-              -Dsonar.organization=mohamed-alaoui6 \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.sources=src/main/java \
-              -Dsonar.tests=src/test/java \
-              -Dsonar.java.binaries=target/classes \
-              -Dsonar.test.inclusions=**/*Test*.java \
-              -Dsonar.login=${{ secrets.SONARTOKEN }}
-            cd ..
-          fi
-        done
-
-
-    - name: Login to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    - name: Build Docker images
-      env:
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      run: docker compose up -d
-
-
-
-    - name: Push discovery image
-      run: |
-          docker tag ${DOCKERHUB_USERNAME}/discovery:latest $DOCKERHUB_USERNAME/discovery:latest
-          docker push $DOCKERHUB_USERNAME/discovery:latest
-
-
-    - name: Push Config-service image
-      run: |
-          docker tag ${DOCKERHUB_USERNAME}/config-service:latest $DOCKERHUB_USERNAME/config-service:latest
-          docker push $DOCKERHUB_USERNAME/config-service:latest
-
-
-
-    - name: Push student image
-      run: |
-          docker tag ${DOCKERHUB_USERNAME}/student:latest $DOCKERHUB_USERNAME/student:latest
-          docker push $DOCKERHUB_USERNAME/student:latest
-
-
-
-
-    - name: Push teacher image
-      run: |
-          docker tag ${DOCKERHUB_USERNAME}/teacher:latest $DOCKERHUB_USERNAME/teacher:latest
-          docker push $DOCKERHUB_USERNAME/teacher:latest
-
-
-
-
-
-    - name: Push video-test image
-      run: |
-          docker tag ${DOCKERHUB_USERNAME}/video-test:latest $DOCKERHUB_USERNAME/video-test:latest
-          docker push $DOCKERHUB_USERNAME/video-test:latest
-
-
-
-
-
-    - name: Push gateway image
-      run: |
-          docker tag ${DOCKERHUB_USERNAME}/gateway-service:latest $DOCKERHUB_USERNAME/gateway-service:latest
-          docker push $DOCKERHUB_USERNAME/gateway-service:latest
-
-
-
-
-    - name: Push security image
-      run: |
-          docker tag ${DOCKERHUB_USERNAME}/security_microservice:latest $DOCKERHUB_USERNAME/security_microservice:latest
-          docker push $DOCKERHUB_USERNAME/security_microservice:latest
-
-
-
-
-    - name: Push cours image
-      run: |
-          docker tag ${DOCKERHUB_USERNAME}/cour:latest $DOCKERHUB_USERNAME/cour:latest
-          docker push $DOCKERHUB_USERNAME/cour:latest
-
-
-
-#- name: Push Docker images
- #     run: |
-#        for service in discovery student teacher video gateway security cours; do
-#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest
-#        done
+            for service in discovery student teacher video gateway security cours; do
+              docker push ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest
+            done
     
 
 
