@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  Config-service:
+    build:
+      context: ./Config-service
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME}/Config-service:latest  # Replace "username" with your Docker Hub username
+
+  Discovery:
+    build:
+      context: ./Discovery
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME}/Discovery:latest  # Replace "username" with your Docker Hub username
+
+  Student:
+    build:
+      context: ./Student  # Path to service2 directory
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME}/Student:latest
+
+  Teacher:
+    build:
+      context: ./Teacher  # Path to service3 directory
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME}/Teacher:latest
+
+  video_testing:
+    build:
+      context: ./video_testing  # Path to service3 directory
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME}/video_testing:latest
+
+
+  Gateway-Service:
+    build:
+      context: ./Gateway-Service  # Path to service3 directory
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME}/Gateway-Service:latest
+
+
+  Security-Microservice:
+    build:
+      context: ./Security_Microservice  # Path to service3 directory
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME}/Security_Microservice:latest
+
+
+
+  Cour:
+    build:
+      context: ./Cour  # Path to service3 directory
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME}/Cour:latest
+
+
