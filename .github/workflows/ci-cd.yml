@@ -91,7 +91,7 @@ jobs:
 
     - name: Push Docker images
       run: |
-        for service in discovery student teacher video gateway security cours; do
+        for service in discovery student teacher video-test gateway-service security_microservice cour; do
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest
         done
 
