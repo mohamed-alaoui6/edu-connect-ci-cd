@@ -40,6 +40,7 @@ jobs:
           fi
         done
 
+
     - name: SonarCloud Scan
       run: |
         mvn sonar:sonar \
