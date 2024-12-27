@@ -2,25 +2,25 @@ version: '3.8'
 
 services:
 
-  Config-service:
+  config-service:
     build:
       context: ./Config-service
       dockerfile: Dockerfile
     image: ${DOCKERHUB_USERNAME}/config-service:latest  # Replace "username" with your Docker Hub username
 
-  Discovery:
+  discovery:
     build:
       context: ./Discovery
       dockerfile: Dockerfile
     image: ${DOCKERHUB_USERNAME}/discovery:latest  # Replace "username" with your Docker Hub username
 
-  Student:
+  student:
     build:
       context: ./Student  # Path to service2 directory
       dockerfile: Dockerfile
     image: ${DOCKERHUB_USERNAME}/student:latest
 
-  Teacher:
+  teacher:
     build:
       context: ./Teacher  # Path to service3 directory
       dockerfile: Dockerfile
@@ -33,14 +33,14 @@ services:
     image: ${DOCKERHUB_USERNAME}/video-test:latest
 
 
-  Gateway-Service:
+  gateway-service:
     build:
       context: ./Gateway-Service  # Path to service3 directory
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     image: ${DOCKERHUB_USERNAME}/gateway-service:latest
 
 
-  Security-Microservice:
+  security_microservice:
     build:
       context: ./Security_Microservice  # Path to service3 directory
       dockerfile: Dockerfile
@@ -48,7 +48,7 @@ services:
 
 
 
-  Cour:
+  cour:
     build:
       context: ./Cour  # Path to service3 directory
       dockerfile: Dockerfile
