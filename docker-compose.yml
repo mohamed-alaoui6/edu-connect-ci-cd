@@ -45,6 +45,7 @@ services:
     image: ${DOCKERHUB_USERNAME}/gateway-service:latest
 
 
+
   security_microservice:
     build:
       context: ./Security_Microservice  # Path to service3 directory
