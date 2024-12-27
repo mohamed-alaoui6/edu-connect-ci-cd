@@ -12,6 +12,7 @@ services:
 
 
 
+
   discovery:
     build:
       context: ./Discovery
