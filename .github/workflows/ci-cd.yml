@@ -28,7 +28,7 @@ jobs:
             java-version: '17'
             distribution: 'temurin'
             cache: 'maven'
-            cache-dependency-path: '**/pom.xml'  # Ajouté pour supporter les multiples pom.xml
+            cache-dependency-path: '**/pom.xml'  
 
     - name: Cache Maven packages
       uses: actions/cache@v3
@@ -50,32 +50,28 @@ jobs:
         done
 
 
- ##    - name: SonarCloud Scan for Edu-Connect Project
-#       run: |
-#         for dir in Config-service Discovery Student Teacher video-test Gateway-Service Security_Microservice Cour; do
-  #         if [ -f "$dir/pom.xml" ]; then
-    #         echo "Running SonarCloud scan for $dir"
-      #       cd $dir
-        #     mvn sonar:sonar \
-          #     -Dsonar.projectKey=mohamed-alaoui6_edu-connect-ci-cd \
-            ##    -Dsonar.organization=mohamed-alaoui6 \
-    #           -Dsonar.host.url=https://sonarcloud.io \
-      #         -Dsonar.sources=src/main/java \
-        #       -Dsonar.tests=src/test/java \
-        #       -Dsonar.java.binaries=target/classes \
-         #      -Dsonar.test.inclusions=**/*Test*.java \
-          #     -Dsonar.login=${{ secrets.SONARTOKEN }}
- #            cd ..
-   #        fi
-     #    done
+    - name: SonarCloud Scan for Edu-Connect Project
+      run: |
+         for dir in Config-service Discovery Student Teacher video-test Gateway-Service Security_Microservice Cour; do
+           if [ -f "$dir/pom.xml" ]; then
+             echo "Running SonarCloud scan for $dir"
+             cd $dir
+             mvn sonar:sonar \
+               -Dsonar.projectKey=mohamed-alaoui6_edu-connect-ci-cd \
+                -Dsonar.organization=mohamed-alaoui6 \
+               -Dsonar.host.url=https://sonarcloud.io \
+               -Dsonar.sources=src/main/java \
+               -Dsonar.tests=src/test/java \
+               -Dsonar.java.binaries=target/classes \
+               -Dsonar.test.inclusions=**/*Test*.java \
+               -Dsonar.login=${{ secrets.SONARTOKEN }}
+             cd ..
+           fi
+         done
 
 
 
- #   - name: Push Docker images
-#      run: |
-   #         for service in discovery student teacher video gateway security cours; do
-  #            docker push ${{ secrets.DOCKERHUB_USERNAME }}/$service:latest
- #           done
+
     
     - name: Build Docker images
       env:
