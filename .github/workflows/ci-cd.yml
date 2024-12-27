@@ -50,14 +50,21 @@ jobs:
         done
 
 
-
-    - name: SonarCloud Scan
+    - name: SonarCloud Scan for Each Microservice
       run: |
-        mvn sonar:sonar \
-          -Dsonar.projectKey=mohamed-alaoui6_edu-connect-ci-cd \
-          -Dsonar.organization=mohamed-alaoui6 \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONARTOKEN }}
+        for dir in Config-service Discovery Student Teacher video-test Gateway-Service Security_Microservice Cour; do
+          if [ -f "$dir/pom.xml" ]; then
+            echo "Running SonarCloud scan for $dir"
+            cd $dir
+            mvn sonar:sonar \
+              -Dsonar.projectKey=mohamed-alaoui6_${dir}-ci-cd \
+              -Dsonar.organization=mohamed-alaoui6 \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=${{ secrets.SONARTOKEN }}
+            cd ..
+          fi
+        done
+
 
     - name: Login to Docker Hub
       uses: docker/login-action@v2
