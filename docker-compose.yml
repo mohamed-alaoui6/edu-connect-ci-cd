@@ -26,11 +26,11 @@ services:
       dockerfile: Dockerfile
     image: ${DOCKERHUB_USERNAME}/Teacher:latest
 
-  video_testing:
+  video-test:
     build:
-      context: ./video_testing  # Path to service3 directory
+      context: ./video-test  # Path to service3 directory
       dockerfile: Dockerfile
-    image: ${DOCKERHUB_USERNAME}/video_testing:latest
+    image: ${DOCKERHUB_USERNAME}/video-test:latest
 
 
   Gateway-Service:
