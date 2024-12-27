@@ -8,6 +8,7 @@ services:
       dockerfile: Dockerfile
     image: ${DOCKERHUB_USERNAME}/config-service:latest  # Replace "username" with your Docker Hub username
 
+
   discovery:
     build:
       context: ./Discovery
