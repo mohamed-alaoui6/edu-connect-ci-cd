@@ -1,15 +1,23 @@
-name: EmpruntRetour CI CD Pipeline
-
+name: Edu-Connect CI CD Pipeline
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'Config-service/**'
+      - 'Discovery/**'
+      - 'Student/**'
+      - 'Teacher/**'
+      - 'video-test/**'
+      - 'Gateway-Service/**'
+      - 'Security_Microservice/**'
+      - 'Cour/**'
+      - 'docker-compose.yml'
   pull_request:
     branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -21,8 +29,16 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build with Maven
-      run: mvn clean package -DskipTests
+    - name: Build all services with Maven
+      run: |
+        for dir in Config-service Discovery Student Teacher video-test Gateway-Service Security_Microservice Cour; do
+          if [ -f "$dir/pom.xml" ]; then
+            echo "Building $dir"
+            cd $dir
+            mvn clean package -DskipTests
+            cd ..
+          fi
+        done
 
     - name: SonarCloud Scan
       run: |
@@ -32,14 +48,11 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONARTOKEN }}
 
-
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-
 
     - name: Build Docker images
       run: docker-compose build
